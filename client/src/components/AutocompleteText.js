@@ -1,14 +1,6 @@
 import React, {Component} from 'react';
 import '../css/AutocompleteText.css';
-import items from './suggestions';
-import ApolloClient from 'apollo-boost';
-const client = new ApolloClient({
-    uri : 'http://localhost:4000/graphql'
-});
-var allSuggestions;
-items(client).then(function(result){
- allSuggestions = result;
-});
+
 export default class AutocompleteText extends Component {
     constructor(props){
         super(props)
@@ -20,11 +12,12 @@ export default class AutocompleteText extends Component {
     }
     
     onTextChanged = (e) =>{
+        const { items } = this.props;
         const value = e.target.value;
         let suggestions = [];
         if(value.length > 0){
             const regex = new RegExp(`^${value}`,'i');
-            suggestions = allSuggestions.sort().filter(v => regex.test(v)).splice(0,10);
+            suggestions = items.sort().filter(v => regex.test(v)).splice(0,10);
         }
         this.setState(() => ({suggestions, text : value}));
         const { onChangeFilter } = this.props;

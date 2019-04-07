@@ -19,7 +19,7 @@ export default function(props){
 }
 
 let search = async(props) =>{
-    const result = await props.query({
+    const result = await props.client.query({
         query : query,
         variables: { filter : ""}
       });

@@ -3,14 +3,17 @@ import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo';
 import Properties from './Properties';
 import AutoComplete from './AutocompleteText';
+import  items   from './suggestions';
+
 export class Property extends Component{
     constructor(props){
         super(props);
         this.state = {
           filter: '',
           properties : [],
-        
+          items : ''
         }
+       this.setItems(); 
        this._search();
       }
       
@@ -21,7 +24,7 @@ export class Property extends Component{
             <div className="container">
                         <div className="row mt-4">
                            <div className="col-md-4">
-                           <AutoComplete onChangeFilter={this.selected} client={this.props} />
+                           <AutoComplete onChangeFilter={this.selected} items={this.state.items} />
                         </div>
                             <div className="col-md-1 ml-2 mt-1">
                             <button className="btn btn-primary" onClick={() => this._search()} >Submit</button>
@@ -36,14 +39,17 @@ export class Property extends Component{
     selected(selected) {
      this.setState( { filter : selected});
     }
-
+    setItems = () => {
+      items(this.props).then((result) => {
+        this.setState({ items : result});
+      });
+    }
     _search = async() =>{
       const { filter }  = this.state;
       const result = await this.props.client.query({
         query : query,
         variables: { filter }
       });
-      console.log({filter});
       const properties = result.data.property;
       this.setState({properties : properties});
     }
