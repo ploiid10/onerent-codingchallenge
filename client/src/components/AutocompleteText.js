@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import '../css/AutocompleteText.css';
-
+import escapeStringRegexp from 'escape-string-regexp';
 export default class AutocompleteText extends Component {
     constructor(props){
         super(props)
@@ -15,14 +15,16 @@ export default class AutocompleteText extends Component {
         const { items } = this.props;
         const value = e.target.value;
         let suggestions = [];
-        if(value.length > 0){
-            const regex = new RegExp(`^${value}`,'i');
+        let searchValue = escapeStringRegexp(value);
+        if(searchValue.length > 0){
+            const regex = new RegExp(`^${searchValue}`,'g');
             suggestions = items.sort().filter(v => regex.test(v)).splice(0,10);
         }
         this.setState(() => ({suggestions, text : value}));
         const { onChangeFilter } = this.props;
         onChangeFilter(value);
     }
+
     selectSuggestion (value){
         this.setState(() => ({
             text : value.item,
