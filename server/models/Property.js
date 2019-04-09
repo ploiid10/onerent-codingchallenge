@@ -1,24 +1,20 @@
-
+'use strict';
 module.exports = (sequelize, DataTypes) => {
-    const Property = sequelize.define("Property",{
-        street : {
-            type : DataTypes.STRING,
+  const Property = sequelize.define('Property', {
+    id : { type : DataTypes.UUID,
+        allowNull: false,
+        primaryKey: true,
+        defaultValue : DataTypes.UUIDV4
         },
-        city : {
-            type :DataTypes.STRING
-        }, 
-        state : {
-            type :DataTypes.STRING
-        },
-        zip : {
-            type :DataTypes.STRING
-        },
-        rent : {
-            type : DataTypes.INTEGER
-        }
-    });
-    Property.associate = (models) => {
-        Property.belongsTo(models.Users);
-    }
-    return Property;
+    street: DataTypes.STRING,
+    city: DataTypes.STRING,
+    state: DataTypes.STRING,
+    zip: DataTypes.STRING,
+    rent: DataTypes.INTEGER,
+    user_id: DataTypes.UUID
+  }, { freezeTableName: true});
+  Property.associate = function(models) {
+    Property.belongsTo(models.Users, { foreignKey : 'user_id', targetKey:'id'});
+  };
+  return Property;
 };

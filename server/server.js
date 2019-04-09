@@ -1,12 +1,12 @@
 const express = require('express');
 const graphqlUI = require('express-graphql');
-const config = require('./config/config');
-const schema = require('./schema');
+const schema = require('./resolvers/resolver');
 const cors = require('cors');
 const app = express();
 app.use(cors());
+const port =    process.env.PORT || 4000;
 app.use('/graphql',graphqlUI({
     schema,
     graphiql : true
 }));
-app.listen(config.port, () => console.log(`Server running on port ${config.port}`));
+app.listen(port, () => console.log(`Server running on port ${port}`));
