@@ -1,7 +1,7 @@
 const db = require('../models/index');
 const { GraphQLObjectType,GraphQLList,GraphQLSchema,GraphQLString} = require('graphql');
 const Property  = require('../typedefs/property');
-const RootQuery = new GraphQLObjectType({
+module.exports = new GraphQLObjectType({
     name : 'search',
     fields :  () =>{
         return {
@@ -13,13 +13,9 @@ const RootQuery = new GraphQLObjectType({
                     }
                 },
                 resolve(root,args){
-                    return db.Property.findAll({});
+                    return  args.stringSearch!="" ? db.Property.findAll({where : {street: args.stringSearch}, include: [db.User]}) : db.Property.findAll({ include: [db.User]}); 
                 }
             }
         }
     }
 });
-const Schema = new GraphQLSchema({
-    query : RootQuery
-}); 
-module.exports = Schema;

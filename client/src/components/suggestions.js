@@ -1,7 +1,6 @@
 import gql from 'graphql-tag';
 const query = gql`query search($filter : String){
     property(stringSearch : $filter) {
-      id
       street
       city
       state

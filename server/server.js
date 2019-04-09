@@ -1,6 +1,6 @@
 const express = require('express');
 const graphqlUI = require('express-graphql');
-const schema = require('./resolvers/resolver');
+const schema = require('./schema');
 const cors = require('cors');
 const app = express();
 app.use(cors());

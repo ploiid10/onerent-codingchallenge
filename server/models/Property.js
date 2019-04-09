@@ -12,9 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     zip: DataTypes.STRING,
     rent: DataTypes.INTEGER,
     user_id: DataTypes.UUID
-  }, { freezeTableName: true});
+  },  {freezeTableName: true});
   Property.associate = function(models) {
-    Property.belongsTo(models.Users, { foreignKey : 'user_id', targetKey:'id'});
+    Property.belongsTo(models.User, { foreignKey : 'user_id', targetKey:'id'});
   };
   return Property;
 };

@@ -16,9 +16,7 @@ export class Property extends Component{
        this.setItems(); 
        this._search();
       }
-      
     render(){
-     
         return(
             <Fragment>
             <div className="container">
@@ -30,7 +28,7 @@ export class Property extends Component{
                             <button className="btn btn-primary" onClick={() => this._search()} >Submit</button>
                             </div>
                         </div>
-                  { this.state.properties.map(properties => <Properties key={properties.id} property={properties}/>)} 
+                  { this.state.properties.map(properties => <Properties key={properties.street} property={properties}/>)} 
              </div>
           </Fragment>
         )
@@ -44,7 +42,7 @@ export class Property extends Component{
         this.setState({ items : result});
       });
     }
-    _search = async() =>{
+    _search = async() => {
       const { filter }  = this.state;
       const result = await this.props.client.query({
         query : query,
@@ -56,7 +54,6 @@ export class Property extends Component{
 }
 const query = gql`query search($filter : String){
   property(stringSearch : $filter) {
-    id
     street
     city
     state

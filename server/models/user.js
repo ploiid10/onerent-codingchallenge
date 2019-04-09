@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('Users', {
+  const User = sequelize.define('User', {
     id: {
       type : DataTypes.UUID,
       primaryKey : true,
@@ -9,10 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       },
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING
-  }, {});
+  }, {freezeTableName: true});
   User.associate = function(models) {
     User.hasMany(models.Property,{ foreignKey : 'id', sourceKey : 'id'});
   };
-
+  
   return User;
 };
