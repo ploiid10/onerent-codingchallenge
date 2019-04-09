@@ -31,10 +31,10 @@ On the frontend, build a single page app which will show a text input and a subm
 (We use ReactJS and Redux + Apollo, but feel free to use any library)
 
 
-# instruction to run
-client directory
+# Instruction to run
+-go to client directory
 1. run npm install
-server directory
+-go to server directory
 1. run npm install
 2. create database with a name "codingchallenge" or any(define databasename in server/config/config.json)
 3. npx sequelize db:migrate to create tables
