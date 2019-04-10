@@ -4,42 +4,17 @@ const Property = new GraphQLObjectType({
     name : 'Property',
     description : 'This is a property',
     fields: ()=> {
-        return  {
-            id : {type : GraphQLInt,
-                resolve(Property){
-                    return Property.id;
-                 }
-            },
-            street : {type : GraphQLString,
-                resolve(Property){
-                    return Property.street;
-                 }
-            },
-            city : {type : GraphQLString,
-                resolve(Property){
-                    return Property.city;
-                 }
-            },
-            state : { type : GraphQLString,
-                resolve(Property){
-                    return Property.state;
-                 }
-            },
-            zip : { type : GraphQLString,
-                resolve(Property){
-                    return Property.zip;
-                 }
-            },
-            rent : { type : GraphQLInt,
-                resolve(Property){
-                    return Property.rent;
-                 }
-            },
-            user : { type : User,
-                resolve(Property){
-                    return Property.getUser();
-                }
+        return {
+            id : {type : GraphQLInt},
+            street : {type : GraphQLString},
+            city : {type : GraphQLString},
+            state : { type : GraphQLString},
+            zip : { type : GraphQLString},
+            rent : { type : GraphQLInt},
+            user : { type : User, resolve(Property){
+                return Property.getUser();
             }
+        }
     }
 }
 });

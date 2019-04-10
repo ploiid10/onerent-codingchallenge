@@ -13,14 +13,15 @@ const query = gql`query search($filter : String){
     }
   }`;  
 
-export default function(props){
-   return search(props);
+export default function(props,state){
+   return search(props,state);
 }
 
-let search = async(props) =>{
+let search = async(props,state) =>{
+    const { filter } = state;
     const result = await props.client.query({
         query : query,
-        variables: { filter : ""}
+        variables: filter 
       });
     var items = [];
     const suggestions = result.data.property;

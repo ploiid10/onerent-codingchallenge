@@ -1,6 +1,7 @@
 const db = require('../models/index');
-const { GraphQLObjectType,GraphQLList,GraphQLSchema,GraphQLString} = require('graphql');
+const { GraphQLObjectType,GraphQLList,GraphQLString,GraphQLInt} = require('graphql');
 const Property  = require('../typedefs/property');
+const Op = db.Sequelize.Op;
 module.exports = new GraphQLObjectType({
     name : 'search',
     fields :  () =>{
@@ -8,12 +9,22 @@ module.exports = new GraphQLObjectType({
             property : {
                 type : new GraphQLList(Property),
                 args : {
-                    stringSearch : {
-                        type : GraphQLString
-                    }
+                    offset :{type : GraphQLInt},
+                    limit :{type : GraphQLInt},
+                    stringSearch : {type : GraphQLString}
                 },
                 resolve(root,args){
-                    return  args.stringSearch!="" ? db.Property.findAll({where : {street: args.stringSearch}, include: [db.User]}) : db.Property.findAll({ include: [db.User]}); 
+                    const query =  (args.stringSearch) ? { offset: args.offset, limit : args.limit,
+                        where : { [Op.or] : [{ street : {[Op.eq] : args.stringSearch} }, 
+                        {zip : {[Op.eq] : args.stringSearch}}, 
+                        {city : {[Op.eq] : args.stringSearch}}, 
+                        {state : {[Op.eq] : args.stringSearch}}, 
+                        {rent : {[Op.eq] : Number.isInteger(+args.stringSearch)? +args.stringSearch : 0}}, 
+                        { '$User.firstName$' : {[Op.eq] : args.stringSearch}}, 
+                        { '$User.lastName$' : {[Op.eq] : args.stringSearch}}]},
+                        include: [{model : db.User, as :'User'}]
+                    } : { offset: args.offset, limit : args.limit ,include: [db.User]};
+                    return db.Property.findAll(query); 
                 }
             }
         }

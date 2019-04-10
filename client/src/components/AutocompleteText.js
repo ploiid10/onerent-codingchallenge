@@ -1,38 +1,53 @@
 import React, {Component} from 'react';
 import '../css/AutocompleteText.css';
 import escapeStringRegexp from 'escape-string-regexp';
+import  getitems   from './suggestions';
 export default class AutocompleteText extends Component {
     constructor(props){
         super(props)
         this.state = {
             suggestions : [],
+            text : '',
             filter : '',
-            text : ''
+            items : ''
         }
     }
+    setItems = (value) => {
+        this.setState({filter : value});
+        getitems(this.props,this.state).then((result) => {
+         this.setState({ items : result});
+         this.viewSuggestions(value);
+        });
     
-    onTextChanged = (e) =>{
-        const { items } = this.props;
-        const value = e.target.value;
+      }
+    viewSuggestions = (value) =>{
         let suggestions = [];
         let searchValue = escapeStringRegexp(value);
-        if(searchValue.length > 0){
-            const regex = new RegExp(`^${searchValue}`,'g');
-            suggestions = items.sort().filter(v => regex.test(v)).splice(0,10);
-        }
-        this.setState(() => ({suggestions, text : value}));
-        const { onChangeFilter } = this.props;
-        onChangeFilter(value);
+          const {items} = this.state;
+          if(searchValue.length > 0){
+              const regex = new RegExp(`^${searchValue}`,'g');
+              suggestions = items.sort().filter(v => regex.test(v)).splice(0,10);
+          }
+          else{
+            value = "";
+          }
+         this.setState(() => ({suggestions, text : value}));
+         const { onChangeFilter } = this.props;
+         console.log(this.props);
+          onChangeFilter(String(value));
+    }
+    onTextChanged = (e) =>{
+        const value = e.target.value;
+        this.setItems(value);
     }
 
     selectSuggestion (value){
         this.setState(() => ({
             text : value.item,
-            filter : value.item,
             suggestions : [],   
         }));
       const { onChangeFilter } = this.props;
-      onChangeFilter(value.item);
+      onChangeFilter(String(value.item));
     }
     showSuggestions(){
          const { suggestions } = this.state;
