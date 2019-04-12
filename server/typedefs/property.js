@@ -1,5 +1,6 @@
 const { GraphQLObjectType ,GraphQLInt,GraphQLString} = require('graphql');
 const User  = require('./user');
+
 const Property = new GraphQLObjectType({
     name : 'Property',
     description : 'This is a property',
@@ -18,4 +19,5 @@ const Property = new GraphQLObjectType({
     }
 }
 });
+
 module.exports = Property;

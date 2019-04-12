@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING
   }, {freezeTableName: true});
+  
   User.associate = function(models) {
     User.hasMany(models.Property,{ foreignKey : 'id', sourceKey : 'id'});
   };

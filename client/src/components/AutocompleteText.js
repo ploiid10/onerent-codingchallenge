@@ -5,6 +5,7 @@ import  getitems   from './suggestions';
 export default class AutocompleteText extends Component {
     constructor(props){
         super(props)
+        // eslint-disable-next-line immutable/no-mutation
         this.state = {
             suggestions : [],
             text : '',
@@ -12,6 +13,7 @@ export default class AutocompleteText extends Component {
             items : ''
         }
     }
+
     setItems = (value) => {
         this.setState({filter : value});
         getitems(this.props,this.state).then((result) => {
@@ -20,9 +22,11 @@ export default class AutocompleteText extends Component {
         });
     
       }
+
     viewSuggestions = (value) =>{
+        // eslint-disable-next-line immutable/no-let
         let suggestions = [];
-        let searchValue = escapeStringRegexp(value);
+        const searchValue = escapeStringRegexp(value);
           const {items} = this.state;
           if(searchValue.length > 0){
               const regex = new RegExp(`^${searchValue}`,'g');
@@ -31,11 +35,11 @@ export default class AutocompleteText extends Component {
           else{
             value = "";
           }
-         this.setState(() => ({suggestions, text : value}));
+         this.setState({suggestions, text : value});
          const { onChangeFilter } = this.props;
-         console.log(this.props);
           onChangeFilter(String(value));
     }
+
     onTextChanged = (e) =>{
         const value = e.target.value;
         this.setItems(value);
@@ -49,6 +53,7 @@ export default class AutocompleteText extends Component {
       const { onChangeFilter } = this.props;
       onChangeFilter(String(value.item));
     }
+
     showSuggestions(){
          const { suggestions } = this.state;
          if(suggestions.length === 0){
@@ -60,7 +65,7 @@ export default class AutocompleteText extends Component {
              </ul>
          )
     }
- 
+    
     render (){
         const { text } = this.state;
         return (

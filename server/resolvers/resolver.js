@@ -8,6 +8,7 @@ module.exports = new GraphQLObjectType({
     name : 'search',
     fields :  () =>{
         return {
+
             propertyInfo : {
                 type : ProperyConnection,
                 args : { after: { type: GraphQLString },
@@ -16,6 +17,7 @@ module.exports = new GraphQLObjectType({
                     last: { type: GraphQLInt } ,
                     stringSearch : { type : GraphQLString}
                 },
+
                 resolve : (root, args) =>{
                     const query =  (args.stringSearch) ? {where : { [Op.or] : [{ street : {[Op.eq] : args.stringSearch}}, 
                         {zip : {[Op.eq] : args.stringSearch}}, 
@@ -26,8 +28,10 @@ module.exports = new GraphQLObjectType({
                         { '$User.lastName$' : {[Op.eq] : args.stringSearch}}]},
                         include: [{model : db.User, as :'User'}]
                     } : {include: [db.User]};
+
                     const property =  db.Property.findAll(query);
-                   return connectionFromPromisedArray( property, args);
+                    
+                    return connectionFromPromisedArray( property, args);
                 }
             }
         }

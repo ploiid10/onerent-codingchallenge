@@ -52,14 +52,15 @@ export class Property extends Component{
           </Fragment>
         )
     }
-
     selected = (selected) => {
       this.setState({filter : selected});
       this._search("");
     }
+
     pagination = (page) => {
       this._search(page);
     }
+
     _search = async(page) => {
       const { filter }  = this.state;
       const { before, after} = this.paginate.cursor;
@@ -104,8 +105,7 @@ export class Property extends Component{
         }
         this.setState({properties : properties});
       }).catch((err) =>{});
-      
-
     }
 }
+
 export default withApollo(Property)

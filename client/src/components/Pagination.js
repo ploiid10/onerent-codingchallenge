@@ -1,6 +1,7 @@
 /* eslint-disable immutable/no-mutation */
 import React from 'react';
 import PropTypes from 'prop-types';
+
 const Pagination = ({onPaginate,paginate : {hasNextPage, hasPreviousPage}})=>{
     return (
         <div className='btn-group float-right'>
@@ -9,8 +10,10 @@ const Pagination = ({onPaginate,paginate : {hasNextPage, hasPreviousPage}})=>{
            </div>
     )
 }
+
 Pagination.propTypes = {
     hasNextPage : PropTypes.bool,
     hasPreviousPage : PropTypes.bool
 }
+
 export default Pagination;
