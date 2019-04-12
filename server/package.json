@@ -20,6 +20,7 @@
     "express-graphql": "^0.7.1",
     "faker": "^4.1.0",
     "graphql": "^14.2.1",
+    "graphql-relay": "^0.6.0",
     "lodash": "^4.17.11",
     "pg": "^7.9.0",
     "pg-hstore": "^2.3.2",
@@ -28,6 +29,7 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "eslint-plugin-immutable": "^1.0.0",
     "nodemon": "^1.18.10"
   }
 }

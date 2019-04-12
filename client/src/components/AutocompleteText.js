@@ -26,7 +26,7 @@ export default class AutocompleteText extends Component {
           const {items} = this.state;
           if(searchValue.length > 0){
               const regex = new RegExp(`^${searchValue}`,'g');
-              suggestions = items.sort().filter(v => regex.test(v)).splice(0,10);
+              suggestions = items.sort().filter(v => regex.test(v));
           }
           else{
             value = "";
