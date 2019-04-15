@@ -1,3 +1,5 @@
+/* eslint-disable immutable/no-this */
+/* eslint-disable immutable/no-mutation */
 import React, {Component} from 'react';
 import '../css/AutocompleteText.css';
 import escapeStringRegexp from 'escape-string-regexp';
@@ -5,22 +7,18 @@ import  getitems   from './suggestions';
 export default class AutocompleteText extends Component {
     constructor(props){
         super(props)
-        // eslint-disable-next-line immutable/no-mutation
         this.state = {
             suggestions : [],
             text : '',
-            filter : '',
             items : ''
         }
     }
 
     setItems = (value) => {
-        this.setState({filter : value});
-        getitems(this.props,this.state).then((result) => {
+        getitems(this.props).then((result) => {
          this.setState({ items : result});
          this.viewSuggestions(value);
         });
-    
       }
 
     viewSuggestions = (value) =>{
@@ -32,12 +30,10 @@ export default class AutocompleteText extends Component {
               const regex = new RegExp(`^${searchValue}`,'g');
               suggestions = items.sort().filter(v => regex.test(v));
           }
-          else{
-            value = "";
-          }
+          
          this.setState({suggestions, text : value});
          const { onChangeFilter } = this.props;
-          onChangeFilter(String(value));
+         onChangeFilter(String(value));
     }
 
     onTextChanged = (e) =>{

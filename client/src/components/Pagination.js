@@ -12,8 +12,11 @@ const Pagination = ({onPaginate,paginate : {hasNextPage, hasPreviousPage}})=>{
 }
 
 Pagination.propTypes = {
-    hasNextPage : PropTypes.bool,
-    hasPreviousPage : PropTypes.bool
+    paginate : PropTypes.shape({
+    hasNextPage : PropTypes.bool.isRequired,
+    hasPreviousPage : PropTypes.bool.isRequired
+    }),
+    onPaginate : PropTypes.func
 }
 
 export default Pagination;

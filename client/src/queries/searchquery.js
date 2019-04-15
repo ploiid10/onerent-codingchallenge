@@ -3,9 +3,10 @@ export const nextquery = gql`query search($filter : String, $first : Int, $after
     propertyInfo(first : $first, after: $after, before: $before, last :$last, stringSearch : $filter){
       edges{
         node{
-              street
+          id
+          street
         city
-              state
+        state
         zip
         rent
         user{
@@ -13,10 +14,11 @@ export const nextquery = gql`query search($filter : String, $first : Int, $after
           lastName
         }
         }
-        cursor
       }
        pageInfo{
         hasNextPage
+        startCursor
+        endCursor
       }
     }
   }`;
@@ -25,9 +27,10 @@ export const prevquery = gql`query search($filter : String, $first : Int, $after
     propertyInfo(first : $first, after: $after, before: $before, last :$last, stringSearch : $filter){
       edges{
         node{
-              street
+        id
+        street
         city
-              state
+        state
         zip
         rent
         user{
@@ -35,10 +38,11 @@ export const prevquery = gql`query search($filter : String, $first : Int, $after
           lastName
         }
         }
-        cursor
       }
        pageInfo{
         hasPreviousPage
+        startCursor
+        endCursor
       }
     }
   }`;
