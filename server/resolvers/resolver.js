@@ -19,18 +19,16 @@ module.exports = new GraphQLObjectType({
                 },
 
                 resolve : (root, args) =>{
-                    const query =  (args.stringSearch) ? {where : { [Op.or] : [{ street : {[Op.eq] : args.stringSearch}}, 
-                        {zip : {[Op.eq] : args.stringSearch}}, 
-                        {city : {[Op.eq] : args.stringSearch}}, 
-                        {state : {[Op.eq] : args.stringSearch}}, 
+                    const query =  (args.stringSearch) ? {where : { [Op.or] : [{ street : {[Op.iLike] : "%"+args.stringSearch}}, 
+                        {zip : {[Op.iLike] : "%"+args.stringSearch}}, 
+                        {city : {[Op.iLike] : "%"+args.stringSearch}}, 
+                        {state : {[Op.iLike] : "%"+args.stringSearch}}, 
                         {rent : {[Op.eq] : Number.isInteger(+args.stringSearch)? +args.stringSearch : 0}}, 
-                        { '$User.firstName$' : {[Op.eq] : args.stringSearch}}, 
-                        { '$User.lastName$' : {[Op.eq] : args.stringSearch}}]},
+                        { '$User.firstName$' : {[Op.iLike] : "%"+args.stringSearch}}, 
+                        { '$User.lastName$' : {[Op.iLike] : "%"+args.stringSearch}}]},
                         include: [{model : db.User, as :'User'}]
                     } : {include: [db.User]};
-
                     const property =  db.Property.findAll(query);
-                    
                     return connectionFromPromisedArray( property, args);
                 }
             }
