@@ -1,5 +1,3 @@
-/* eslint-disable immutable/no-this */
-/* eslint-disable immutable/no-mutation */
 import React, {Component} from 'react';
 import '../css/AutocompleteText.css';
 import escapeStringRegexp from 'escape-string-regexp';
@@ -22,7 +20,6 @@ export default class AutocompleteText extends Component {
       }
 
     viewSuggestions = (value) =>{
-        // eslint-disable-next-line immutable/no-let
         let suggestions = [];
         const searchValue = escapeStringRegexp(value);
           const {items} = this.state;

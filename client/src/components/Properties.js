@@ -1,3 +1,5 @@
+/* eslint-disable immutable/no-mutation */
+/* eslint-disable immutable/no-this */
 import React, {Component,Fragment} from 'react';
 import { withApollo } from 'react-apollo';
 import AutoComplete from './AutocompleteText';
@@ -79,7 +81,6 @@ export class Properties extends Component{
       const { before, after} = this.paginate.cursor;
       const {first, last } = this.paginate; 
       const variables = {filter}; 
-      // eslint-disable-next-line immutable/no-let
       let query = "";
       if(page === "Previous" && page !== ""){
           variables.before = before;
