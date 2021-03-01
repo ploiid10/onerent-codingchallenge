@@ -1,19 +1,22 @@
+/* eslint-disable immutable/no-mutation */
 import React from 'react';
 import PropTypes from 'prop-types';
-const Pagination = (props)=>{
-const {onPaginate} = props;
-const {paginate} = props;
-paginate.propTypes = {
-    offset : PropTypes.number,
-    limit : PropTypes.number,
-    length : PropTypes.number
-}
-console.log(paginate);
+
+const Pagination = ({onPaginate,paginate : {hasNextPage, hasPreviousPage}})=>{
     return (
         <div className='btn-group float-right'>
-           <button className='btn btn-sm btn-outline-secondary' disabled={(paginate.offset === 0)} onClick={() => { onPaginate(-5) }}>Previous</button>
-            <button className='btn btn-sm btn-outline-secondary' disabled={(paginate.length<=paginate.limit)} onClick={() => { onPaginate(5) }}>Next</button>
-        </div>
+           <button className='btn btn-sm btn-outline-secondary' disabled={!hasPreviousPage} onClick={() => { onPaginate("Previous") }}>Previous</button>
+            <button className='btn btn-sm btn-outline-secondary' disabled={!hasNextPage} onClick={() => { onPaginate("Next") }}>Next</button>
+           </div>
     )
 }
+
+Pagination.propTypes = {
+    paginate : PropTypes.shape({
+    hasNextPage : PropTypes.bool.isRequired,
+    hasPreviousPage : PropTypes.bool.isRequired
+    }),
+    onPaginate : PropTypes.func
+}
+
 export default Pagination;

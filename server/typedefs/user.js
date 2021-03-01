@@ -1,4 +1,5 @@
 const { GraphQLObjectType ,GraphQLString} = require('graphql');
+
 const User = new GraphQLObjectType({
     name : 'User',
     description : 'User details',
@@ -9,4 +10,5 @@ const User = new GraphQLObjectType({
         }
     }
 });
+
 module.exports = User;

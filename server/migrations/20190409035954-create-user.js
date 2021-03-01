@@ -24,6 +24,7 @@ module.exports = {
       }
     });
   },
+
   down: (queryInterface, Sequelize) => {
   queryInterface.dropTable('Property');
     return queryInterface.dropTable('User');
