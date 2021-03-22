@@ -1,5 +1,3 @@
-# codingchallenge
-
 For the backend, We're going to implement a Node + Express web server that exposes a GraphQL API.
 Implement a database with two models, Users and Properties. (We use postgres + sequelize, but you can choose whatever you're most comfortable with)
 
